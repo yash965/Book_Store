@@ -4,5 +4,5 @@ import com.Yash.Book_Store.Entity.BookEntry;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BookStore_Repository extends JpaRepository<BookEntry, Long> {
-    BookEntry findByTitle(String title);
+    BookEntry findByBookName(String title);
 }

@@ -5,6 +5,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,9 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    String SECRET;
+    private static final Logger log = LoggerFactory.getLogger(JwtService.class);
+
+    String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
 
     private String createToken(Map<String, Object> claims, String username)
     {
@@ -23,12 +27,14 @@ public class JwtService {
                 .setClaims(claims)
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date((System.currentTimeMillis())*1000*60*60*10))
+                .setExpiration(new Date((System.currentTimeMillis())+(1000*60*60*10)))    // 10 hrs.
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 
     public String generateToken(String username)
     {
+        log.info("Logged in Successfully - {}", username);
+
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, username);
     }

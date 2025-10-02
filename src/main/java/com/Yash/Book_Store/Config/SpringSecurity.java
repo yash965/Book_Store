@@ -30,13 +30,16 @@ public class SpringSecurity {
     @Autowired
     User_Service userService;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
     {
         return http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/api/auth/register", "/api/auth/login", "/api/books/**").permitAll()
-                        .requestMatchers("/api/**")
+                        .requestMatchers("/api/auth/**", "/api/books/**").permitAll()
+                        .requestMatchers("/api/**").authenticated()
                 )
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
@@ -45,17 +48,11 @@ public class SpringSecurity {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder()
-    {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     public AuthenticationProvider authenticationProvider()
     {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(userService);
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
 
         return daoAuthenticationProvider;
     }
@@ -65,4 +62,5 @@ public class SpringSecurity {
     {
         return config.getAuthenticationManager();
     }
+
 }

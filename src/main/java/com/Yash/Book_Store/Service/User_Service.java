@@ -2,6 +2,8 @@ package com.Yash.Book_Store.Service;
 
 import com.Yash.Book_Store.Entity.User;
 import com.Yash.Book_Store.Repository.User_Repository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class User_Service implements UserDetailsService {
+
+    private static final Logger log = LoggerFactory.getLogger(User_Service.class);
 
     private final User_Repository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -22,9 +26,14 @@ public class User_Service implements UserDetailsService {
 
     public User registerUser(String username, String plainTextPassword)
     {
-        if(userRepository.findByUsername(username).isPresent())
-        {
-            throw new IllegalStateException("Username already Exists");
+        try {
+            if(userRepository.findByUsername(username).isPresent())
+            {
+                throw new IllegalStateException("Username already Exists");
+            }
+        } catch (IllegalStateException e) {
+            log.error("User - [{}] already exists", username);
+            throw new RuntimeException(e);
         }
 
         User newUser = new User();

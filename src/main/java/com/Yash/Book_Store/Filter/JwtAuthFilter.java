@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.io.IOException;
 // This filter reads a JWT from the request header, validates it, and — if valid — places an Authentication object into
 // SecurityContextHolder so Spring Security knows the request is authenticated for downstream code.
 
+@Component
 public class JwtAuthFilter extends OncePerRequestFilter
 {
     @Autowired
@@ -29,13 +31,13 @@ public class JwtAuthFilter extends OncePerRequestFilter
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authHeader = request.getHeader("Authentication");
+        String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
 
         if(authHeader != null && authHeader.startsWith("Bearer "))
         {
-            token = authHeader.substring(7);
+            token = authHeader.substring(7).trim();
             username = jwtService.extractUsername(token);   // extract username from jwt token.
         }
 

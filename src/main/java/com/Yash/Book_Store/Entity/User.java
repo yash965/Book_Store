@@ -48,12 +48,11 @@ public class User implements UserDetails {
         return this.password;
     }
 
-    @OneToOne
-    @JoinColumn(name = "cart_id", nullable = false)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Order> orders = new ArrayList<>();
+    private List<Order> orders;
 
     // You can set these to true for simplicity
     @Override

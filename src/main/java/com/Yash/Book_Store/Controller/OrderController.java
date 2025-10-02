@@ -1,5 +1,6 @@
 package com.Yash.Book_Store.Controller;
 
+import DTO.OrderDto;
 import com.Yash.Book_Store.Entity.Order;
 import com.Yash.Book_Store.Service.OrderService;
 import org.springframework.http.HttpHeaders;
@@ -15,7 +16,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
-@PreAuthorize("isAuthenticated()")
 public class OrderController {
 
     private final OrderService orderService;
@@ -26,16 +26,16 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder()
+    public ResponseEntity<OrderDto> createOrder()
     {
-        Order order = orderService.createOrderFromCart();
+        OrderDto order = orderService.createOrderFromCart();
         return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<Order>> getOrderHistory()
+    public ResponseEntity<List<OrderDto>> getOrderHistory()
     {
-        List<Order> orders = orderService.getOrderHistoryForCurrentUser();
+        List<OrderDto> orders = orderService.getOrderHistoryForCurrentUser();
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 }

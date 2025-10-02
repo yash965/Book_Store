@@ -1,5 +1,6 @@
 package com.Yash.Book_Store.Controller;
 
+import DTO.AuthResponse;
 import com.Yash.Book_Store.Entity.User;
 import com.Yash.Book_Store.Service.JwtService;
 import com.Yash.Book_Store.Service.User_Service;
@@ -37,20 +38,23 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public User registerUser(@RequestBody User user)
+    public User registerUser(@RequestBody AuthRequest authRequest)
     {
-        return userService.registerUser(user.getUsername(), user.getPassword());
+        return userService.registerUser(authRequest.getUsername(), authRequest.getPassword());
     }
 
     @PostMapping("/login")
-    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest)
+    public AuthResponse authenticateAndGetToken(@RequestBody AuthRequest authRequest)
     {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 
         if(authentication.isAuthenticated())
         {
-            return jwtService.generateToken(authRequest.getUsername());
+            String token = jwtService.generateToken(authRequest.getUsername());
+            AuthResponse authResponse = new AuthResponse();
+            authResponse.setToken(token);
+            return authResponse;
         }
         else{
             throw new UsernameNotFoundException("Invalid user request");

@@ -5,9 +5,9 @@ import com.Yash.Book_Store.Repository.BookStore_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class BookStore_Service {
@@ -22,7 +22,7 @@ public class BookStore_Service {
 
     public BookEntry findBookByName(String title)
     {
-        return bookStoreRepository.findByTitle(title);
+        return bookStoreRepository.findByBookName(title);
     }
 
     public BookEntry findBookById(Long id)
@@ -45,11 +45,12 @@ public class BookStore_Service {
     public List<BookEntry> findBookBySearch(String query)
     {
         List<BookEntry> books = findAllBooks();
-        return books.stream().filter(x->x.bookName.startsWith(query)).toList();
+        return books.stream().filter(x->x.getBookName().startsWith(query)).toList();
     }
 
     public void addNewBookEntry(BookEntry bookEntry)
     {
+        bookEntry.setDate(LocalDateTime.now());
         bookStoreRepository.save(bookEntry);
     }
 }

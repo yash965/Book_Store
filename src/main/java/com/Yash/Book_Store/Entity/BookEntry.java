@@ -3,10 +3,13 @@ package com.Yash.Book_Store.Entity;
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "books")
-@Data
+@Getter
+@Setter
 public class BookEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +27,6 @@ public class BookEntry {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @Column(name = "date", nullable = false)
+    @Column(name = "date", nullable = true)
     private LocalDateTime date;
 }

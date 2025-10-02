@@ -1,17 +1,14 @@
 package com.Yash.Book_Store.Controller;
 
 import DTO.AddItemRequest;
-import com.Yash.Book_Store.Entity.Cart;
-import com.Yash.Book_Store.Entity.CartItem;
+import DTO.CartDto;
 import com.Yash.Book_Store.Service.CartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/cart")
-@PreAuthorize("isAuthenticated()")
 public class CartController {
 
     private final CartService cartService;
@@ -22,23 +19,28 @@ public class CartController {
     }
 
     @GetMapping
-    public ResponseEntity<Cart> getCurrentUserCart()
+    public ResponseEntity<CartDto> getCurrentUserCart()
     {
-        return new ResponseEntity<>(cartService.getCartForCurrentUser(), HttpStatus.OK);
+        return new ResponseEntity<>(cartService.getCartDtoForCurrentUser(), HttpStatus.OK);
+    }
+
+    @GetMapping("jwtTesting")
+    public ResponseEntity<String> checkJwt()
+    {
+        return new ResponseEntity<>("JWT checked", HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Cart> addBookToCar(@RequestBody AddItemRequest addItemRequest)
+    public ResponseEntity<CartDto> addBookToCart(@RequestBody AddItemRequest addItemRequest)
     {
-        Cart cart = cartService.getCartForCurrentUser();
-        cart = cartService.addBookToCart(addItemRequest.getBookId(), addItemRequest.getQuantity());
+        CartDto cart = cartService.addBookToCart(addItemRequest.getBookId(), addItemRequest.getQuantity());
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Cart> removeBookFromCart(@PathVariable Long bookId)
+    @DeleteMapping("/{bookId}")
+    public ResponseEntity<CartDto> removeBookFromCart(@PathVariable Long bookId)
     {
-        Cart cart = cartService.removeBookFromCart(bookId);
+        CartDto cart = cartService.removeBookFromCart(bookId);
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 }
