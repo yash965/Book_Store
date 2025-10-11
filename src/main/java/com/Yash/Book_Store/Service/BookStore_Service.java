@@ -2,6 +2,8 @@ package com.Yash.Book_Store.Service;
 
 import com.Yash.Book_Store.Entity.BookEntry;
 import com.Yash.Book_Store.Repository.BookStore_Repository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import java.util.Optional;
 
 @Service
 public class BookStore_Service {
+
+    public static final Logger log = LoggerFactory.getLogger(BookStore_Service.class);
 
     @Autowired
     BookStore_Repository bookStoreRepository;
@@ -52,5 +56,24 @@ public class BookStore_Service {
     {
         bookEntry.setDate(LocalDateTime.now());
         bookStoreRepository.save(bookEntry);
+    }
+
+    public BookEntry removeBookById(Long id)
+    {
+        List<BookEntry> books = findAllBooks();
+        BookEntry removedBook = books.stream().filter(book -> book.getId().equals(id)).findFirst().orElse(null);
+
+        if (removedBook != null) {
+            bookStoreRepository.deleteById(id);
+            log.info("Book removed {}", removedBook);
+        }
+
+        return removedBook;
+    }
+
+    public List<BookEntry> findBookByCategory(String category)
+    {
+        List<BookEntry> allBooks = findAllBooks();
+        return allBooks.stream().filter(book -> book.getCategory().equals(category)).toList();
     }
 }

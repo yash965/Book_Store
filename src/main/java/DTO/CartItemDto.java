@@ -1,5 +1,6 @@
 package DTO;
 
+import com.Yash.Book_Store.Entity.BookEntry;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CartItemDto {
     private Long id;
-    private String bookTitle;
+    private BookEntry book;
     private int quantity;
 }

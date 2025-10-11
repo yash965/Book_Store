@@ -18,8 +18,8 @@ public class BookEntry {
     @Column(name = "title", nullable = false, length = 200)
     private String bookName;
 
-    @Column(name = "genre", nullable = true, length = 100)
-    private String genre;
+    @Column(name = "category", nullable = true, length = 100)
+    private String category;
 
     @Column(name = "author", nullable = false, length = 100)
     private String author;
@@ -29,4 +29,10 @@ public class BookEntry {
 
     @Column(name = "date", nullable = true)
     private LocalDateTime date;
+
+    @Column(name = "image", nullable = false)
+    String image;
+
+    @Column(name = "description", nullable = false)
+    String description;
 }

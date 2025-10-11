@@ -35,4 +35,18 @@ public class BookController {
         bookService.addNewBookEntry(bookEntry);
         return new ResponseEntity<>(bookEntry, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BookEntry> removeBookById(@PathVariable Long id)
+    {
+        BookEntry book = bookService.removeBookById(id);
+        return new ResponseEntity<>(book, HttpStatus.OK);
+    }
+
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<BookEntry>> getBooksByCategory(@PathVariable String category)
+    {
+        List<BookEntry> books = bookService.findBookByCategory(category);
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
 }

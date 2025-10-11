@@ -25,7 +25,7 @@ public class DtoMapper {
     {
         return new CartItemDto(
             item.getId(),
-            item.getBook().getBookName(),
+            item.getBook(),
             item.getQuantity()
         );
     }
