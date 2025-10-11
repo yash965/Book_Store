@@ -1,4 +1,4 @@
-package DTO;
+package com.Yash.Book_Store.DTO;
 
 import com.Yash.Book_Store.Entity.Cart;
 import com.Yash.Book_Store.Entity.CartItem;

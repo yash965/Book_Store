@@ -1,14 +1,12 @@
 package com.Yash.Book_Store.Controller;
 
-import DTO.AuthResponse;
+import com.Yash.Book_Store.DTO.AuthResponse;
 import com.Yash.Book_Store.Entity.User;
 import com.Yash.Book_Store.Service.JwtService;
 import com.Yash.Book_Store.Service.User_Service;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

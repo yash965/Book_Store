@@ -1,7 +1,7 @@
 package com.Yash.Book_Store.Controller;
 
-import DTO.AddItemRequest;
-import DTO.CartDto;
+import com.Yash.Book_Store.DTO.AddItemRequest;
+import com.Yash.Book_Store.DTO.CartDto;
 import com.Yash.Book_Store.Service.CartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

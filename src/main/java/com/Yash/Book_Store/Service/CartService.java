@@ -1,7 +1,7 @@
 package com.Yash.Book_Store.Service;
 
-import DTO.CartDto;
-import DTO.DtoMapper;
+import com.Yash.Book_Store.DTO.CartDto;
+import com.Yash.Book_Store.DTO.DtoMapper;
 import com.Yash.Book_Store.Entity.BookEntry;
 import com.Yash.Book_Store.Entity.Cart;
 import com.Yash.Book_Store.Entity.CartItem;
