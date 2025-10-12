@@ -22,4 +22,4 @@ EXPOSE 8080
 
 # The command to run the application
 # IMPORTANT: Change 'your-app-name-0.0.1-SNAPSHOT.jar' to your actual JAR file name
-ENTRYPOINT ["java", "-jar", "target/your-app-name-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "target/Book_Store-0.0.1-SNAPSHOT.jar"]
