@@ -28,7 +28,7 @@ public class AppConfig
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://e-commerce-frontend-lake-one.vercel.app", "http://localhost:3000") // React app
+                        .allowedOrigins("https://e-commerce-frontend-lake-one.vercel.app") // React app
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
