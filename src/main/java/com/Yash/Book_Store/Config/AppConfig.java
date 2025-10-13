@@ -28,7 +28,7 @@ public class AppConfig
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://e-commerce-frontend-lake-one.vercel.app", "http://localhost:3000") // React app
+                        .allowedOrigins("https://book-store-uajv.onrender.com", "http://localhost:3000") // React app
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
@@ -36,3 +36,4 @@ public class AppConfig
         };
     }
 }
+
