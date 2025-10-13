@@ -28,7 +28,11 @@ public class AppConfig
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://e-commerce-frontend-lake-one.vercel.app") // React app
+                        .allowedOrigins(
+                                "https://e-commerce-frontend-lake-one.vercel.app", // Your MAIN production URL
+                                "https://e-commerce-fronte-git-067474-yash-khandelwals-projects-eaa2e70f.vercel.app", // The PREVIEW URL that worked
+                                "http://localhost:3000" // Your LOCAL development URL
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
