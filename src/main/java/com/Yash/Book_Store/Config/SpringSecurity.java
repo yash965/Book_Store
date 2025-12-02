@@ -40,7 +40,7 @@ public class SpringSecurity {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/auth/**", "/api/books/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/api/books/**", "/api/health").permitAll()
                         .requestMatchers("/api/**").authenticated()
                 )
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
