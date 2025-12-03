@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -34,16 +35,19 @@ public class SpringSecurity {
     PasswordEncoder passwordEncoder;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
-    {
-        return http.csrf(csrf -> csrf.disable())
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(auth->auth
+                .authorizeHttpRequests(auth -> auth
+                        // 1. Explicitly allow preflight requests for ANY endpoint
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        // 2. Allow auth, books, and health check
                         .requestMatchers("/api/auth/**", "/api/books/**", "/api/health").permitAll()
+                        // 3. Everything else requires authentication
                         .requestMatchers("/api/**").authenticated()
                 )
-                .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
